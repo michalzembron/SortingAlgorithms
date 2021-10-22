@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             itemsToSort.Add(itemsToSortSpawn.transform.GetChild(i).gameObject);
         }
 
-        RandomizeValues();
+        GetRandomizedValues();
     }
 
     void Update()
@@ -63,13 +63,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void RandomizeValues()
+    void GetRandomizedValues()
     {
-        for (int i = 0; i < itemsToSort.Count; i++)
+        List<int> values = RandomizeValues.instance.randomizedValues;
+        for (int i = 0; i < values.Count; i++)
         {
-            int randomValue = Random.Range(0, 100);
-            itemsToSort[i].transform.GetChild(0).GetComponent<TMP_Text>().text = $"{randomValue}";
-            itemsToSort[i].GetComponent<ItemToSort>().value = randomValue;
+            itemsToSort[i].transform.GetChild(0).GetComponent<TMP_Text>().text = $"{values[i]}";
+            itemsToSort[i].GetComponent<ItemToSort>().value = values[i];
         }
     }
 
