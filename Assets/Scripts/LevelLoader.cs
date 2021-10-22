@@ -11,6 +11,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadLevel(int levelID)
     {
+        loadingProgressSlider.gameObject.SetActive(true);
         StartCoroutine(LoadAsync(levelID));
     }
 
@@ -25,5 +26,14 @@ public class LevelLoader : MonoBehaviour
             loadingProgressText.text = (progress * 100f).ToString("F0") + "%";
             yield return null;
         }
+    }
+
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
 }
