@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        CubeSpawner.instance.SpawnCubes(RandomizeValues.instance.randomizedValues.Count);
+
         algorithmID = SaveManager.instance.LoadSelectedSortingAlgorithm();
         switch (algorithmID)
         {

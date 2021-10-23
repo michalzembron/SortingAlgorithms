@@ -21,13 +21,10 @@ public class RandomizeValues : MonoBehaviour
 
     public List<int> randomizedValues;
 
-    [Range(2, 20)]
-    public int amount;
-
     [Range(1, 100)]
     public int maxValue;
 
-    public void RandomizeNewValues()
+    public void RandomizeNewValues(int amount)
     {
         randomizedValues.Clear();
         for (int i = 0; i < amount; i++)
