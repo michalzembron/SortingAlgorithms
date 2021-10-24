@@ -11,6 +11,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadLevel(int levelID)
     {
+        AudioManager.instance.PlayAudioEffect("buttonFX");
         loadingProgressSlider.gameObject.SetActive(true);
         StartCoroutine(LoadAsync(levelID));
     }
@@ -30,6 +31,7 @@ public class LevelLoader : MonoBehaviour
 
     public void QuitGame()
     {
+        AudioManager.instance.PlayAudioEffect("buttonFX");
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #else

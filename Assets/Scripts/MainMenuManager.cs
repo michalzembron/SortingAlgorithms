@@ -19,6 +19,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.instance.ChangeBackgroundMusic();
+
         RandomizeValues.instance.randomizedValues = SaveManager.instance.LoadRandomizedValues();
 
         SetRandomizedValuesText();

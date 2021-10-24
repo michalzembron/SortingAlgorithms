@@ -737,7 +737,7 @@ Transform:
   - {fileID: 1650323466}
   - {fileID: 68866976}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &402884815
 GameObject:
@@ -1303,7 +1303,7 @@ RectTransform:
   - {fileID: 1440950371}
   - {fileID: 1582816333}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2925,6 +2925,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596187123}
   m_CullTransparentMesh: 1
+--- !u!1 &1649109454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1649109455}
+  - component: {fileID: 1649109456}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1649109455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649109454}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.5183845, y: 5.1517925, z: 178.28836}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1649109456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649109454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc49639414f05d48b39cc25632faf4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music:
+  - name: MainMenu
+    clip: {fileID: 8300000, guid: 3bc8b721fe5d8574094390872d524d66, type: 3}
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: SortingLevel
+    clip: {fileID: 8300000, guid: 2abdcb708ccec3544a1d11154248daa9, type: 3}
+    volume: 0.5
+    loop: 1
+    source: {fileID: 0}
+  effects:
+  - name: buttonFX
+    clip: {fileID: 8300000, guid: bbd020659ac81b442844c742f7159fbc, type: 3}
+    volume: 0.7
+    loop: 0
+    source: {fileID: 0}
+  - name: boxSliding
+    clip: {fileID: 8300000, guid: c9dd778f453c67d49922fa18ad55c110, type: 3}
+    volume: 0.7
+    loop: 0
+    source: {fileID: 0}
+  audioMixerGroup: {fileID: 24300002, guid: 9761a99dedcbe894b99b2ac589f19827, type: 2}
 --- !u!1 &1650323465
 GameObject:
   m_ObjectHideFlags: 0
@@ -3710,7 +3776,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2020226980
 GameObject:

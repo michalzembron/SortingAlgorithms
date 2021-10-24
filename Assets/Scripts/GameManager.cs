@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject startButton;
     public TMP_Text selectedAlgorithmText;
     public TMP_Text stepsCounterText;
+    public TMP_Text timerText;
     private int algorithmID;
     private int stepsCounter;
 
@@ -19,10 +21,14 @@ public class GameManager : MonoBehaviour
     Vector3 firstItemPos;
     Vector3 secondItemPos;
 
-    float t;
+    bool isCompleted;
+    float sortingTimer;
+    float itemMovementTimer;
 
     void Start()
     {
+        AudioManager.instance.ChangeBackgroundMusic();
+
         CubeSpawner.instance.SpawnCubes(RandomizeValues.instance.randomizedValues.Count);
 
         algorithmID = SaveManager.instance.LoadSelectedSortingAlgorithm();
@@ -52,12 +58,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        t += Time.deltaTime / .5f;
+        itemMovementTimer += Time.deltaTime / .5f;
 
         if (needsRepositioning)
         {
-            firstItem.transform.position = Vector3.Lerp(firstItemPos, secondItemPos, t);
-            secondItem.transform.position = Vector3.Lerp(secondItemPos, firstItemPos, t);
+            firstItem.transform.position = Vector3.Lerp(firstItemPos, secondItemPos, itemMovementTimer);
+            secondItem.transform.position = Vector3.Lerp(secondItemPos, firstItemPos, itemMovementTimer);
             if (firstItem.transform.position == secondItemPos && secondItem.transform.position == firstItemPos)
             {
                 needsRepositioning = false;
@@ -77,6 +83,10 @@ public class GameManager : MonoBehaviour
 
     public void StartSorting()
     {
+        AudioManager.instance.PlayAudioEffect("buttonFX");
+        sortingTimer = 0;
+        startButton.SetActive(false);
+        StartCoroutine(CountSeconds());
         switch (algorithmID)
         {
             case 0:
@@ -98,6 +108,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator CountSeconds()
+    {
+        while (!isCompleted)
+        {
+            yield return new WaitForSeconds(1);
+            sortingTimer++;
+            timerText.text = $"Time: {sortingTimer}";
+        }
+    }
+
     IEnumerator BubbleSort()
     {
         int n = itemsToSort.Count;
@@ -114,7 +134,7 @@ public class GameManager : MonoBehaviour
                     secondItem = itemsToSort[i + 1];
                     firstItemPos = firstItem.transform.position;
                     secondItemPos = secondItem.transform.position;
-                    t = 0;
+                    itemMovementTimer = 0;
 
                     needsRepositioning = true;
 
@@ -124,11 +144,14 @@ public class GameManager : MonoBehaviour
                     stepsCounter++;
                     stepsCounterText.text = $"Steps: {stepsCounter}";
 
+                    AudioManager.instance.PlayAudioEffect("boxSliding");
+
                     yield return new WaitForSeconds(.6f);
                 }
             }
             n--;
         }
+        isCompleted = true;
     }
 
     IEnumerator InsertionSort()
@@ -146,7 +169,7 @@ public class GameManager : MonoBehaviour
                 secondItem = itemsToSort[j - 1];
                 firstItemPos = firstItem.transform.position;
                 secondItemPos = secondItem.transform.position;
-                t = 0;
+                itemMovementTimer = 0;
 
                 needsRepositioning = true;
 
@@ -157,10 +180,13 @@ public class GameManager : MonoBehaviour
                 stepsCounter++;
                 stepsCounterText.text = $"Steps: {stepsCounter}";
 
+                AudioManager.instance.PlayAudioEffect("boxSliding");
+
                 yield return new WaitForSeconds(.6f);
             }
             i++;
         }
+        isCompleted = true;
     }
 
     IEnumerator SelectionSort()
@@ -187,7 +213,7 @@ public class GameManager : MonoBehaviour
                 secondItem = itemsToSort[jMin];
                 firstItemPos = firstItem.transform.position;
                 secondItemPos = secondItem.transform.position;
-                t = 0;
+                itemMovementTimer = 0;
 
                 needsRepositioning = true;
 
@@ -197,8 +223,11 @@ public class GameManager : MonoBehaviour
                 stepsCounter++;
                 stepsCounterText.text = $"Steps: {stepsCounter}";
 
+                AudioManager.instance.PlayAudioEffect("boxSliding");
+
                 yield return new WaitForSeconds(.6f);
             }
         }
+        isCompleted = true;
     }
 }
