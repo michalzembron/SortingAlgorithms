@@ -34,7 +34,6 @@ public class SaveManager : MonoBehaviour
             else
                 builder.Append(randomizedValues[i]).Append(",");
         }
-        Debug.Log(builder.ToString());
         PlayerPrefs.SetString("randomizedValues", builder.ToString());
     }
 

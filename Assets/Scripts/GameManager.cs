@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
+    public static GameManager instance;
+    public void Awake() => instance = this;
+    #endregion
+
     public GameObject startButton;
     public TMP_Text selectedAlgorithmText;
     public TMP_Text stepsCounterText;
@@ -25,11 +30,15 @@ public class GameManager : MonoBehaviour
     float sortingTimer;
     float itemMovementTimer;
 
+    public List<Move> moves = new List<Move>();
+    public bool isReadyToMove = false;
+    public bool isMovingItems = false;
+
     void Start()
     {
-        AudioManager.instance.ChangeBackgroundMusic();
+        if(AudioManager.instance != null) AudioManager.instance.ChangeBackgroundMusic();
 
-        CubeSpawner.instance.SpawnCubes(RandomizeValues.instance.randomizedValues.Count);
+        if (CubeSpawner.instance != null) CubeSpawner.instance.SpawnCubes(RandomizeValues.instance.randomizedValues.Count);
 
         algorithmID = SaveManager.instance.LoadSelectedSortingAlgorithm();
         switch (algorithmID)
@@ -90,19 +99,15 @@ public class GameManager : MonoBehaviour
         switch (algorithmID)
         {
             case 0:
-                Debug.Log("Bubble Sort");
-                StartCoroutine(BubbleSort());
+                NewBubbleSort();
                 break;
             case 1:
-                Debug.Log("Insertion Sort");
                 StartCoroutine(InsertionSort());
                 break;
             case 2:
-                Debug.Log("Selection Sort");
                 StartCoroutine(SelectionSort());
                 break;
             default:
-                Debug.Log("Bubble Sort");
                 StartCoroutine(BubbleSort());
                 break;
         }
@@ -116,6 +121,38 @@ public class GameManager : MonoBehaviour
             sortingTimer++;
             timerText.text = $"Time: {sortingTimer}";
         }
+    }
+
+    private void NewBubbleSort()
+    {
+        int n = itemsToSort.Count;
+        stepsCounter = 0;
+        while (n > 1)
+        {
+            for (int i = 0; i < n - 1; i++)
+            {
+                if (itemsToSort[i].GetComponent<ItemToSort>().value > itemsToSort[i + 1].GetComponent<ItemToSort>().value)
+                {
+                    GameObject itemToSortTemp = itemsToSort[i];
+
+                    firstItem = itemsToSort[i];
+                    secondItem = itemsToSort[i + 1];
+                    
+                    firstItemPos = firstItem.transform.position;
+                    secondItemPos = secondItem.transform.position;
+                    moves.Add(new Move(itemsToSort[i], itemsToSort[i + 1]));
+
+                    itemsToSort[i] = itemsToSort[i + 1];
+                    itemsToSort[i + 1] = itemToSortTemp;
+
+                    stepsCounter++;
+                    stepsCounterText.text = $"Steps: {stepsCounter}";
+                }
+            }
+            n--;
+        }
+        isCompleted = true;
+        isReadyToMove = true;
     }
 
     IEnumerator BubbleSort()

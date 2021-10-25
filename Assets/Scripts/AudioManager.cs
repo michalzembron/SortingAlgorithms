@@ -42,12 +42,6 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
     }
-
-    public void Start()
-    {
-        //PlayMusic("");
-    }
-
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(music, sound => sound.name == name);
