@@ -2990,6 +2990,11 @@ MonoBehaviour:
     volume: 0.7
     loop: 0
     source: {fileID: 0}
+  - name: successFanfare
+    clip: {fileID: 8300000, guid: d3dcfec78678e7844bfb1b41246216c9, type: 3}
+    volume: 0.3
+    loop: 0
+    source: {fileID: 0}
   audioMixerGroup: {fileID: 24300002, guid: 9761a99dedcbe894b99b2ac589f19827, type: 2}
 --- !u!1 &1650323465
 GameObject:

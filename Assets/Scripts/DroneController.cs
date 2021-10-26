@@ -59,6 +59,8 @@ public class DroneController : MonoBehaviour
             GameManager.instance.stepsCounterText.text = $"Steps: {GameManager.instance.stepsCounter}";
         }
         GameManager.instance.isCompleted = true;
+        AudioManager.instance.PlayAudioEffect("successFanfare");
+        AnimationManager.instance.ChangeAnimationState("Sort Complete");
     }
 
     IEnumerator FlyToItem(Vector3 itemPos)
