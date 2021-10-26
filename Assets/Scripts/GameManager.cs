@@ -10,52 +10,47 @@ public class GameManager : MonoBehaviour
     public void Awake() => instance = this;
     #endregion
 
+    public List<GameObject> itemsToSort = new List<GameObject>();
     public GameObject startButton;
+    public GameObject itemsToSortSpawn;
     public TMP_Text selectedAlgorithmText;
     public TMP_Text stepsCounterText;
     public TMP_Text timerText;
-    private int algorithmID;
+    public ParticleSystem sortCompleteEffect;
     public int stepsCounter;
-
-    public GameObject itemsToSortSpawn;
-    public List<GameObject> itemsToSort = new List<GameObject>();
-
     public bool isCompleted;
-    float sortingTimer;
 
     public List<Move> moves = new List<Move>();
     public bool isReadyToMove = false;
     public bool isMovingItems = false;
 
+    private int algorithmID;
+    private float sortingTimer;
+
     void Start()
     {
-        if(AudioManager.instance != null) AudioManager.instance.ChangeBackgroundMusic();
-
-        if (CubeSpawner.instance != null) CubeSpawner.instance.SpawnCubes(RandomizeValues.instance.randomizedValues.Count);
-
-        algorithmID = SaveManager.instance.LoadSelectedSortingAlgorithm();
-        switch (algorithmID)
+        if (AudioManager.instance != null && CubeSpawner.instance != null)
         {
-            case 0:
-                selectedAlgorithmText.text = "Bubble Sort";
-                break;
-            case 1:
-                selectedAlgorithmText.text = "Insertion Sort";
-                break;
-            case 2:
-                selectedAlgorithmText.text = "Selection Sort";
-                break;
-            default:
-                selectedAlgorithmText.text = "Bubble Sort";
-                break;
+            AudioManager.instance.ChangeBackgroundMusic();
+            CubeSpawner.instance.SpawnCubes(RandomizeValues.instance.randomizedValues.Count);
+            CameraController.instance.AdjustCamera();
         }
 
+        algorithmID = SaveManager.instance.LoadSelectedSortingAlgorithm();
+
+        selectedAlgorithmText.text = algorithmID switch
+        {
+            0 => "Bubble Sort",
+            1 => "Insertion Sort",
+            2 => "Selection Sort",
+            _ => "Bubble Sort",
+        };
         for (int i = 0; i < itemsToSortSpawn.transform.childCount; i++)
         {
             itemsToSort.Add(itemsToSortSpawn.transform.GetChild(i).gameObject);
         }
 
-        GetRandomizedValues();
+        if (RandomizeValues.instance != null) GetRandomizedValues();
     }
 
     void GetRandomizedValues()

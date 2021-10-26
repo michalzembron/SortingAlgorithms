@@ -61,6 +61,7 @@ public class DroneController : MonoBehaviour
         GameManager.instance.isCompleted = true;
         AudioManager.instance.PlayAudioEffect("successFanfare");
         AnimationManager.instance.ChangeAnimationState("Sort Complete");
+        GameManager.instance.sortCompleteEffect.Play();
     }
 
     IEnumerator FlyToItem(Vector3 itemPos)
