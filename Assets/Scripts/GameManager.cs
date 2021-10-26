@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
             2 => "Selection Sort",
             _ => "Bubble Sort",
         };
+
         for (int i = 0; i < itemsToSortSpawn.transform.childCount; i++)
         {
             itemsToSort.Add(itemsToSortSpawn.transform.GetChild(i).gameObject);

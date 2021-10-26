@@ -8,13 +8,13 @@ public class AnimationManager : MonoBehaviour
     #endregion
 
     public Animator animator;
-    private string curerntState;
+    private string currentState;
 
     public void ChangeAnimationState(string newState)
     {
-        if (curerntState == newState) return;
+        if (currentState == newState) return;
 
         animator.Play(newState);
-        curerntState = newState;
+        currentState = newState;
     }
 }

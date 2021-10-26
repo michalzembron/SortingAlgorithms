@@ -66,9 +66,9 @@ public class DroneController : MonoBehaviour
 
     IEnumerator FlyToItem(Vector3 itemPos)
     {
-        float time = 0.5f;
         Vector3 startingPos = transform.localPosition;
         Vector3 finalPos = new Vector3(itemPos.x, transform.localPosition.y, transform.localPosition.z);
+        float time = 0.1f * (Mathf.Abs(transform.localPosition.x - finalPos.x) / 2);
         float elapsedTime = 0;
 
         while (transform.localPosition.x != finalPos.x)
