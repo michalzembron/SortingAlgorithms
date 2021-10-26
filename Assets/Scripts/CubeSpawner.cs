@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
@@ -18,12 +16,6 @@ public class CubeSpawner : MonoBehaviour
     public GameObject itemSpawnerParent;
     public GameObject itemToSpawnPrefab;
     public Vector3[] itemSpawnPos;
-
-    void Start()
-    {
-        //SpawnCubes(20);
-        //SpawnCubes(9);
-    }
 
     private void CalculatePositions(int cubeAmount)
     {

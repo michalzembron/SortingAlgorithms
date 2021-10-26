@@ -20,15 +20,8 @@ public class GameManager : MonoBehaviour
     public GameObject itemsToSortSpawn;
     public List<GameObject> itemsToSort = new List<GameObject>();
 
-    private bool needsRepositioning;
-    private GameObject firstItem;
-    private GameObject secondItem;
-    Vector3 firstItemPos;
-    Vector3 secondItemPos;
-
     public bool isCompleted;
     float sortingTimer;
-    float itemMovementTimer;
 
     public List<Move> moves = new List<Move>();
     public bool isReadyToMove = false;
@@ -63,21 +56,6 @@ public class GameManager : MonoBehaviour
         }
 
         GetRandomizedValues();
-    }
-
-    void Update()
-    {
-        itemMovementTimer += Time.deltaTime / .5f;
-
-        if (needsRepositioning)
-        {
-            firstItem.transform.position = Vector3.Lerp(firstItemPos, secondItemPos, itemMovementTimer);
-            secondItem.transform.position = Vector3.Lerp(secondItemPos, firstItemPos, itemMovementTimer);
-            if (firstItem.transform.position == secondItemPos && secondItem.transform.position == firstItemPos)
-            {
-                needsRepositioning = false;
-            }
-        }
     }
 
     void GetRandomizedValues()
@@ -134,9 +112,6 @@ public class GameManager : MonoBehaviour
                 if (itemsToSort[i].GetComponent<ItemToSort>().value > itemsToSort[i + 1].GetComponent<ItemToSort>().value)
                 {
                     GameObject itemToSortTemp = itemsToSort[i];
-
-                    firstItem = itemsToSort[i];
-                    secondItem = itemsToSort[i + 1];
                     
                     moves.Add(new Move(itemsToSort[i], itemsToSort[i + 1]));
 
@@ -160,9 +135,6 @@ public class GameManager : MonoBehaviour
             {
                 GameObject itemToSortTemp = itemsToSort[j];
 
-                firstItem = itemsToSort[j];
-                secondItem = itemsToSort[j - 1];
-
                 moves.Add(new Move(itemsToSort[j], itemsToSort[j - 1]));
 
                 itemsToSort[j] = itemsToSort[j - 1];
@@ -185,17 +157,12 @@ public class GameManager : MonoBehaviour
             for (int j = i + 1; j < itemsToSort.Count; j++)
             {
                 if (itemsToSort[j].GetComponent<ItemToSort>().value < itemsToSort[jMin].GetComponent<ItemToSort>().value)
-                {
                     jMin = j;
-                }
             }
 
             if (jMin != i)
             {
                 GameObject itemToSortTemp = itemsToSort[i];
-
-                firstItem = itemsToSort[i];
-                secondItem = itemsToSort[jMin];
 
                 moves.Add(new Move(itemsToSort[i], itemsToSort[jMin]));
 
