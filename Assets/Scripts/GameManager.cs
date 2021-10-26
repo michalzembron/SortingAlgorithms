@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text stepsCounterText;
     public TMP_Text timerText;
     private int algorithmID;
-    private int stepsCounter;
+    public int stepsCounter;
 
     public GameObject itemsToSortSpawn;
     public List<GameObject> itemsToSort = new List<GameObject>();
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         switch (algorithmID)
         {
             case 0:
-                NewBubbleSort();
+                BubbleSort();
                 break;
             case 1:
                 StartCoroutine(InsertionSort());
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(SelectionSort());
                 break;
             default:
-                StartCoroutine(BubbleSort());
+                BubbleSort();
                 break;
         }
     }
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void NewBubbleSort()
+    private void BubbleSort()
     {
         int n = itemsToSort.Count;
         stepsCounter = 0;
@@ -138,15 +138,10 @@ public class GameManager : MonoBehaviour
                     firstItem = itemsToSort[i];
                     secondItem = itemsToSort[i + 1];
                     
-                    firstItemPos = firstItem.transform.position;
-                    secondItemPos = secondItem.transform.position;
                     moves.Add(new Move(itemsToSort[i], itemsToSort[i + 1]));
 
                     itemsToSort[i] = itemsToSort[i + 1];
                     itemsToSort[i + 1] = itemToSortTemp;
-
-                    stepsCounter++;
-                    stepsCounterText.text = $"Steps: {stepsCounter}";
                 }
             }
             n--;
@@ -155,7 +150,7 @@ public class GameManager : MonoBehaviour
         isReadyToMove = true;
     }
 
-    IEnumerator BubbleSort()
+    IEnumerator OldBubbleSort()
     {
         int n = itemsToSort.Count;
         stepsCounter = 0;
