@@ -20,11 +20,6 @@ public class DroneController : MonoBehaviour
     Vector3 previousFirstItemPos;
     Vector3 previousSecondItemPos;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (GameManager.instance.isReadyToMove)
@@ -63,6 +58,7 @@ public class DroneController : MonoBehaviour
             GameManager.instance.stepsCounter++;
             GameManager.instance.stepsCounterText.text = $"Steps: {GameManager.instance.stepsCounter}";
         }
+        GameManager.instance.isCompleted = true;
     }
 
     IEnumerator FlyToItem(Vector3 itemPos)

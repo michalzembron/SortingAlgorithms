@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     Vector3 firstItemPos;
     Vector3 secondItemPos;
 
-    bool isCompleted;
+    public bool isCompleted;
     float sortingTimer;
     float itemMovementTimer;
 
@@ -117,9 +117,9 @@ public class GameManager : MonoBehaviour
     {
         while (!isCompleted)
         {
-            yield return new WaitForSeconds(1);
             sortingTimer++;
             timerText.text = $"Time: {sortingTimer}";
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -146,7 +146,6 @@ public class GameManager : MonoBehaviour
             }
             n--;
         }
-        isCompleted = true;
         isReadyToMove = true;
     }
 
@@ -172,7 +171,6 @@ public class GameManager : MonoBehaviour
             }
             i++;
         }
-        isCompleted = true;
         isReadyToMove = true;
     }
 
@@ -205,7 +203,6 @@ public class GameManager : MonoBehaviour
                 itemsToSort[jMin] = itemToSortTemp;
             }
         }
-        isCompleted = true;
         isReadyToMove = true;
     }
 }
