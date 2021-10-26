@@ -102,10 +102,10 @@ public class GameManager : MonoBehaviour
                 BubbleSort();
                 break;
             case 1:
-                StartCoroutine(InsertionSort());
+                InsertionSort();
                 break;
             case 2:
-                StartCoroutine(SelectionSort());
+                SelectionSort();
                 break;
             default:
                 BubbleSort();
@@ -150,43 +150,7 @@ public class GameManager : MonoBehaviour
         isReadyToMove = true;
     }
 
-    IEnumerator OldBubbleSort()
-    {
-        int n = itemsToSort.Count;
-        stepsCounter = 0;
-        while (n > 1)
-        {
-            for (int i = 0; i < n-1; i++)
-            {
-                if (itemsToSort[i].GetComponent<ItemToSort>().value > itemsToSort[i + 1].GetComponent<ItemToSort>().value)
-                {
-                    GameObject itemToSortTemp = itemsToSort[i];
-
-                    firstItem = itemsToSort[i];
-                    secondItem = itemsToSort[i + 1];
-                    firstItemPos = firstItem.transform.position;
-                    secondItemPos = secondItem.transform.position;
-                    itemMovementTimer = 0;
-
-                    needsRepositioning = true;
-
-                    itemsToSort[i] = itemsToSort[i + 1];
-                    itemsToSort[i + 1] = itemToSortTemp;
-
-                    stepsCounter++;
-                    stepsCounterText.text = $"Steps: {stepsCounter}";
-
-                    AudioManager.instance.PlayAudioEffect("boxSliding");
-
-                    yield return new WaitForSeconds(.6f);
-                }
-            }
-            n--;
-        }
-        isCompleted = true;
-    }
-
-    IEnumerator InsertionSort()
+    private void InsertionSort()
     {
         int i = 1;
         stepsCounter = 0;
@@ -199,29 +163,20 @@ public class GameManager : MonoBehaviour
 
                 firstItem = itemsToSort[j];
                 secondItem = itemsToSort[j - 1];
-                firstItemPos = firstItem.transform.position;
-                secondItemPos = secondItem.transform.position;
-                itemMovementTimer = 0;
 
-                needsRepositioning = true;
+                moves.Add(new Move(itemsToSort[j], itemsToSort[j - 1]));
 
                 itemsToSort[j] = itemsToSort[j - 1];
                 itemsToSort[j - 1] = itemToSortTemp;
                 j--;
-
-                stepsCounter++;
-                stepsCounterText.text = $"Steps: {stepsCounter}";
-
-                AudioManager.instance.PlayAudioEffect("boxSliding");
-
-                yield return new WaitForSeconds(.6f);
             }
             i++;
         }
         isCompleted = true;
+        isReadyToMove = true;
     }
 
-    IEnumerator SelectionSort()
+    private void SelectionSort()
     {
         int n = itemsToSort.Count;
         stepsCounter = 0;
@@ -243,23 +198,14 @@ public class GameManager : MonoBehaviour
 
                 firstItem = itemsToSort[i];
                 secondItem = itemsToSort[jMin];
-                firstItemPos = firstItem.transform.position;
-                secondItemPos = secondItem.transform.position;
-                itemMovementTimer = 0;
 
-                needsRepositioning = true;
+                moves.Add(new Move(itemsToSort[i], itemsToSort[jMin]));
 
                 itemsToSort[i] = itemsToSort[jMin];
                 itemsToSort[jMin] = itemToSortTemp;
-
-                stepsCounter++;
-                stepsCounterText.text = $"Steps: {stepsCounter}";
-
-                AudioManager.instance.PlayAudioEffect("boxSliding");
-
-                yield return new WaitForSeconds(.6f);
             }
         }
         isCompleted = true;
+        isReadyToMove = true;
     }
 }
